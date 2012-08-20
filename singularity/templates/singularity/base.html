@@ -1,0 +1,168 @@
+{% load i18n %}
+{# frontadmin_tags bootstraped_tags  #}
+{% get_current_language as lang %}
+{% block doctype %}<!DOCTYPE html>{% endblock %}
+{# www.phpied.com/conditional-comments-block-downloads/ #}
+<!--[if IE]><![endif]-->
+<html lang="{{ lang|default:"en" }}" class="no-js{% block html.class%}{% endblock %}" dir="{{LANGUAGE_BIDI|yesno:"rtl,ltr"}}"{% block html.extra %}{% endblock %}>
+  <head>
+    {% block site.head %}
+    {# Site title #}
+    {% block site.title %}<title>{% block app.title %}{% endblock %}{% block project.title %}{% endblock %}</title>{% endblock %}
+    {# Metas #}
+    {% block site.meta %}
+    <meta charset="utf-8">
+    {# Always force latest IE rendering engine (even in intranet) & Chrome Frame Remove this if you use the .htaccess #}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {% block project.meta %}
+    <meta name="description" content="{% block project.description %}{% endblock %}">
+    <meta name="keywords" content="{% block project.keywords %}{% endblock %}">
+    {% endblock %}
+    {% block app.meta %}{% endblock %}
+    {% comment %}
+    Mobile Viewport Fix
+    device-width : Occupy full width of the screen in its current orientation
+    initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+    maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+    {% endcomment %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock %}
+    <base href="{% block base.path %}/{% endblock %}">
+    {% block project.favicon %}
+    <link rel='shortcut icon' href="/favicon.ico" />
+    {% endblock%}
+
+    {% block site.headstyles %}
+    {% block project.headstyles %}{% endblock%}
+    {% block app.headstyles %}{% endblock%}
+    {% endblock %}
+
+    {% block site.headscripts %}
+    {# HTML5 shim, for IE6-8 support of HTML5 elements #}
+    {% block project.headscripts %}{% endblock %}
+    {% block app.headscripts %}{% endblock %}
+    <!--[if lte IE 8]>
+    <script>
+      document.createElement('tabs');
+      document.createElement('pane');
+      document.createElement('ng-pluralize');
+    </script>
+    <![endif]-->
+    <script>
+        /*!
+        * $script.js Async loader & dependency manager
+        * https://github.com/ded/script.js
+        * (c) Dustin Diaz, Jacob Thornton 2011
+        * License: MIT
+        */
+        (function(a,b){typeof module!="undefined"?module.exports=b():typeof define=="function"&&define.amd?define(a,b):this[a]=b()})("$script",function(){function q(a,b,c){for(c=0,j=a.length;c<j;++c)if(!b(a[c]))return k;return 1}function r(a,b){q(a,function(a){return!b(a)})}function s(a,b,i){function o(a){return a.call?a():d[a]}function p(){if(!--n){d[m]=1,k&&k();for(var a in f)q(a.split("|"),o)&&!r(f[a],o)&&(f[a]=[])}}a=a[l]?a:[a];var j=b&&b.call,k=j?b:i,m=j?a.join(""):b,n=a.length;return setTimeout(function(){r(a,function(a){if(h[a])return m&&(e[m]=1),h[a]==2&&p();h[a]=1,m&&(e[m]=1),t(!c.test(a)&&g?g+a+".js":a,p)})},0),s}function t(c,d){var e=a.createElement("script"),f=k;e.onload=e.onerror=e[p]=function(){if(e[n]&&!/^c|loade/.test(e[n])||f)return;e.onload=e[p]=null,f=1,h[c]=2,d()},e.async=1,e.src=c,b.insertBefore(e,b.firstChild)}var a=document,b=a.getElementsByTagName("head")[0],c=/^https?:\/\//,d={},e={},f={},g,h={},i="string",k=!1,l="push",m="DOMContentLoaded",n="readyState",o="addEventListener",p="onreadystatechange";return!a[n]&&a[o]&&(a[o](m,function u(){a.removeEventListener(m,u,k),a[n]="complete"},k),a[n]="loading"),s.get=t,s.order=function(a,b,c){(function d(e){e=a.shift(),a.length?s(e,d):s(e,b,c)})()},s.path=function(a){g=a},s.ready=function(a,b,c){a=a[l]?a:[a];var e=[];return!r(a,function(a){d[a]||e[l](a)})&&q(a,function(a){return d[a]})?b():!function(a){f[a]=f[a]||[],f[a][l](b),c&&c(e)}(a.join("|")),s},s})
+
+        $script('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', function() {
+            $script('js/bootstrap.min.js', function() {
+                $().dropdown();
+                bootstrap();
+            });
+            $script('google-code-prettify/prettify.min.js', bootstrap);
+            $script('js/homepage.js', bootstrap);
+            $script('http://code.angularjs.org/1.0.1/angular-1.0.1.min.js', bootstrap);
+            $script('http://code.angularjs.org/angular-resource-1.0.1.js', bootstrap);
+            $script('http://code.angularjs.org/1.0.1/i18n-1.0.1/angular-locale_sk.js', function() {
+                angular.module('ngLocal.sk', [])._invokeQueue.push(angular.module('ngLocale')._invokeQueue[0]);
+                bootstrap();
+            });
+            $script('http://code.angularjs.org/1.0.1/i18n-1.0.1/angular-locale_en-us.js', function() {
+                angular.module('ngLocal.us', [])._invokeQueue.push(angular.module('ngLocale')._invokeQueue[0]);
+                bootstrap();
+            });
+        });
+
+        function bootstrap() {
+            if (window.prettyPrint && window.$ && $.fn.popover && angular.bootstrap &&
+            hasModule('ngLocal.sk') && hasModule('ngLocal.us') && hasModule('homepage') && hasModule('ngResource')) {
+                $(function(){
+                    angular.bootstrap(document, ['homepage', 'ngLocal.us']);
+                });
+            }
+        }
+
+        function hasModule(moduleName) {
+            try {
+                return angular.module(moduleName);
+                } catch (e) {
+                return false;
+            }
+        }
+    </script>
+    <script>
+    /*
+    AngularJS v1.0.1
+    (c) 2010-2012 Google, Inc. http://angularjs.org
+    License: MIT
+    */
+    (function(i){'use strict';function d(c,b,e){return c[b]||(c[b]=e())}return d(d(i,"angular",Object),"module",function(){var c={};return function(b,e,f){e&&c.hasOwnProperty(b)&&(c[b]=null);return d(c,b,function(){function a(a,b,d){return function(){c[d||"push"]([a,b,arguments]);return g}}if(!e)throw Error("No module: "+b);var c=[],d=[],h=a("$injector","invoke"),g={_invokeQueue:c,_runBlocks:d,requires:e,name:b,provider:a("$provide","provider"),factory:a("$provide","factory"),service:a("$provide","service"),
+    value:a("$provide","value"),constant:a("$provide","constant","unshift"),filter:a("$filterProvider","register"),controller:a("$controllerProvider","register"),directive:a("$compileProvider","directive"),config:h,run:function(a){d.push(a);return this}};f&&h(f);return g})}})})(window);
+    </script>
+    {% endblock %}
+
+    {% endblock %}
+  </head>
+    {# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ #}
+<!--[if lt IE 7 ]><body class="ie6"><![endif]--><!--[if IE 7 ]><body class="ie7"><![endif]--><!--[if IE 8 ]><body class="ie8"><![endif]--><!--[if IE 9 ]><body class="ie9"><![endif]--><!--[if gt IE 9]><body><![endif]--><!--[if !IE]><!--><body><!--<![endif]-->
+    {% block site.body %}
+    <div id="main-container" class="container">
+        {% block content %}{% endblock %}
+    </div>
+    {% endblock %}
+    {% block site.styles %}
+    {% block project.styles %}{% endblock%}
+    {% block app.styles %}{% endblock%}
+    {% endblock %}
+    {% block site.scripts %}
+    {# Javascript at the bottom for fast page loading #}
+    <script>!window.jQuery && document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"><\/script>');</script>
+    <script>
+    var django = (function($){
+        var _urls = {},
+            _conf = {};
+        return {
+            settings: {
+                'MEDIA_URL': '{{ MEDIA_URL }}',
+                'STATIC_URL': '{{ STATIC_URL }}'
+            },
+
+            i18n: function() {
+                var strs = {};
+                var get = function(k) { return _conf[k]; }
+                var set = function(k, v) { return _conf[k] = v; }
+                return arguments.length == 2
+                    && set(arguments[0], arguments[1])
+                    || get(arguments[0]);
+            },
+
+            urls: function() {
+                var get = function(k) { return _urls[k]; }
+                var set = function(k, v) { return _urls[k] = v; }
+                return arguments.length >= 2
+                    && set(arguments[0], arguments[1])
+                    || get(arguments[0]);
+            }
+        }
+    })(jQuery);
+
+    {# http://www.djangoproject.com/weblog/2011/feb/08/security/ #}
+    {# http://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ajax #}
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if ($.cookie('csrftoken') && (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url)))) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+            }
+        }
+    });
+    </script>
+    {% block project.scripts %}{% endblock%}
+    {% block app.scripts %}{% endblock%}
+    {% endblock%}
+  </body>
+</html>
+
